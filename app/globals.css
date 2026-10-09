@@ -110,3 +110,6 @@
 .admin-login-error{min-height:18px;color:#ff8b80;font-size:11px}
 .admin-login-foot{border-top:1px solid var(--line);padding-top:17px;font-size:10px;color:#879189;line-height:1.8}
 .admin-login-foot a{color:var(--lime);text-decoration:underline;text-underline-offset:3px}
+
+.admin-top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.admin-top-actions form{margin:0}
