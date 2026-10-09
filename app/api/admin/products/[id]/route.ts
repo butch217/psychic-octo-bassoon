@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isValidAdminSession, COOKIE_NAME } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -32,7 +33,7 @@ export async function PATCH(request: NextRequest, context: Context) {
   let body: Record<string, unknown>;
   try { body = await request.json(); } catch { return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 }); }
 
-  const data: Record<string, unknown> = {};
+  const data: Prisma.ProductUpdateInput = {};
   if ("name" in body) { const v = text(body.name, 120); if (!v) return NextResponse.json({ error: "Invalid name" }, { status: 400 }); data.name = v; }
   if ("slug" in body) {
     const v = text(body.slug, 140)?.toLowerCase();
@@ -41,18 +42,18 @@ export async function PATCH(request: NextRequest, context: Context) {
   }
   if ("category" in body) { const v = text(body.category, 80); if (!v) return NextResponse.json({ error: "Invalid category" }, { status: 400 }); data.category = v; }
   if ("description" in body) { const v = text(body.description, 3000); if (!v) return NextResponse.json({ error: "Invalid description" }, { status: 400 }); data.description = v; }
-  if ("partnerUrl" in body) { if (!partnerUrl(body.partnerUrl)) return NextResponse.json({ error: "Partner URL must be a valid HTTPS Carry1st destination" }, { status: 400 }); data.partnerUrl = body.partnerUrl; }
+  if ("partnerUrl" in body) { if (!partnerUrl(body.partnerUrl)) return NextResponse.json({ error: "Partner URL must be a valid HTTPS Carry1st destination" }, { status: 400 }); data.partnerUrl = body.partnerUrl as string; }
   if ("imageUrl" in body) {
     if (body.imageUrl !== null && body.imageUrl !== "" && !httpsUrl(body.imageUrl)) return NextResponse.json({ error: "Image URL must use HTTPS" }, { status: 400 });
-    data.imageUrl = body.imageUrl === "" ? null : body.imageUrl;
+    data.imageUrl = body.imageUrl === "" || body.imageUrl === null ? null : body.imageUrl as string;
   }
   if ("status" in body) {
     if (!["DRAFT", "ACTIVE", "ARCHIVED"].includes(String(body.status))) return NextResponse.json({ error: "Invalid status" }, { status: 400 });
-    data.status = body.status;
+    data.status = body.status as "DRAFT" | "ACTIVE" | "ARCHIVED";
   }
   if ("sortOrder" in body) {
     if (!Number.isSafeInteger(body.sortOrder) || Math.abs(Number(body.sortOrder)) > 100000) return NextResponse.json({ error: "Invalid sort order" }, { status: 400 });
-    data.sortOrder = body.sortOrder;
+    data.sortOrder = Number(body.sortOrder);
   }
   if (Object.keys(data).length === 0) return NextResponse.json({ error: "No valid fields supplied" }, { status: 400 });
 
