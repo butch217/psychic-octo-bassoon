@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
   const sortOrder = Number.isInteger(body.sortOrder) ? Number(body.sortOrder) : 0;
 
   if (!name || !slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || !category || !description ||
-      !validHttpsUrl(partnerUrl) || (imageUrl !== null && !validHttpsUrl(imageUrl)) ||
+      !validPartnerUrl(partnerUrl) || (imageUrl !== null && !validHttpsUrl(imageUrl)) ||
       !Number.isSafeInteger(sortOrder) || Math.abs(sortOrder) > 100000) {
     return NextResponse.json({ error: "Provide valid name, slug, category, description, HTTPS partner URL, optional HTTPS image URL, and sort order." }, { status: 400 });
   }
