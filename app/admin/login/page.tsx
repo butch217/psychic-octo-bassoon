@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function AdminLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   return <main className="admin-login-shell">
     <section className="admin-login-card">
-      <a className="brand" href="/"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMERS WORLD</span></span></a>
+      <Link className="brand" href="/"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMERS WORLD</span></span></Link>
       <p className="eyebrow">RESTRICTED AREA / ADMINISTRATION</p>
       <h1>Admin sign in</h1>
       <p className="admin-login-intro">Sign in to manage the Sentinel catalogue. Access is limited to the configured administrator.</p>
