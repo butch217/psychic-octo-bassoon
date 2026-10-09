@@ -10,7 +10,7 @@ const emptyDraft: Draft = { name: "", category: "Top-ups", description: "" };
 
 export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [report, setReport] = useState<AffiliateReport | null>(null);
+  const [report, setReport] = useState<AffiliateReport | null>(null);\n  const [importText, setImportText] = useState("");\n  const [importing, setImporting] = useState(false);
   const [query, setQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -84,7 +84,29 @@ export default function AdminPage() {
     } catch (error) { setNotice(error instanceof Error ? error.message : "Could not delete product."); }
   }
 
-  const activeCategories = new Set(products.filter(p => p.status === "ACTIVE").map(p => p.category)).size;
+
+  async function importReport(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    let parsed: unknown;
+    try { parsed = JSON.parse(importText); } catch { setNotice("Report import must be valid JSON."); return; }
+    const events = Array.isArray(parsed) ? parsed : (parsed && typeof parsed === "object" && "events" in parsed ? (parsed as { events: unknown }).events : null);
+    if (!Array.isArray(events) || events.length === 0) { setNotice("Paste an array of verified report rows."); return; }
+    if (!window.confirm("Confirm these rows were taken from an official Carry1st affiliate report? Only verified partner data should be imported.")) return;
+    setImporting(true);
+    try {
+      const response = await fetch("/api/admin/affiliate-report/import", {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ events }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Report import failed.");
+      setNotice(`Imported ${data.imported} rows; skipped ${data.skippedAsDuplicates} duplicates.`);
+      setImportText("");
+      const refreshed = await fetch("/api/admin/affiliate-report", { cache: "no-store" });
+      if (refreshed.ok) setReport(await refreshed.json());
+    } catch (error) { setNotice(error instanceof Error ? error.message : "Report import failed."); }
+    finally { setImporting(false); }
+  }
+\n  const activeCategories = new Set(products.filter(p => p.status === "ACTIVE").map(p => p.category)).size;
 
   return <main className="admin-shell">
     <aside className="admin-sidebar">
@@ -116,7 +138,7 @@ export default function AdminPage() {
         {!loading && filtered.length === 0 && <p className="admin-empty">No saved products match this search.</p>}
         <p className="admin-notice" role="status">{loading ? "Loading…" : notice}</p>
       </section>
-      <section className="admin-panel" id="affiliate"><div className="admin-panel-heading"><div><p className="eyebrow">PERFORMANCE / 02</p><h2>Affiliate reporting</h2></div></div><div className="admin-report-note"><strong>Partner conversion imports are not connected yet.</strong><p>Tracked outbound clicks: {report?.outboundClicks ?? "—"} · Verified orders recorded: {report?.verifiedOrders ?? "—"}. A click is not a sale. Commission totals include only events explicitly marked verified in the database; do not manually estimate or invent earnings.</p></div></section>
+      <section className="admin-panel" id="affiliate"><div className="admin-panel-heading"><div><p className="eyebrow">PERFORMANCE / 02</p><h2>Affiliate reporting</h2></div></div><div className="admin-report-note"><strong>Verified partner reporting</strong><p>Tracked outbound clicks: {report?.outboundClicks ?? "—"} · Verified orders recorded: {report?.verifiedOrders ?? "—"}. A click is not a sale. Commission totals include only events explicitly marked verified in the database; do not estimate earnings.</p><form className="admin-product-form" onSubmit={importReport}><label className="admin-form-wide">Import verified report rows (JSON)<textarea value={importText} onChange={e => setImportText(e.target.value)} placeholder={'[{"partnerReference":"official-reference","commissionMinor":1250,"currency":"NGN","productSlug":"call-of-duty-mobile"}]'} required /></label><p className="admin-form-wide">Use only data from an official Carry1st affiliate report. Commission is entered in minor currency units (for NGN, kobo). Duplicate partner references are skipped.</p><button className="button" type="submit" disabled={importing}>{importing ? "Importing…" : "Import verified rows"}</button></form></div></section>
     </section>
   </main>;
 }
