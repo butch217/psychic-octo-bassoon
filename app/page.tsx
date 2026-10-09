@@ -1,15 +1,32 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
 const affiliateUrl = "https://carry1st.sng.link/Dz248/s3c7?paffid=2824295&_smtype=3";
 const discordUrl = "https://discord.gg/QUeHC9eN";
 const whatsappUrl = "https://wa.me/2349063389697";
+
 const categories = [
-  { number: "01", title: "Call of Duty: Mobile", description: "COD Points and Battle Pass offers listed on Carry1st.", tag: "CODM TOP-UP" },
-  { number: "02", title: "Free Fire Diamonds", description: "Browse available Free Fire diamond top-ups and offers.", tag: "FREE FIRE" },
-  { number: "03", title: "PUBG Mobile UC", description: "Find PUBG Mobile UC top-ups and related offers.", tag: "PUBG MOBILE" },
-  { number: "04", title: "Mobile Legends Diamonds", description: "Explore Mobile Legends diamond top-ups on the partner shop.", tag: "MOBILE LEGENDS" },
-  { number: "05", title: "Blood Strike Golds", description: "Check available Blood Strike Gold top-ups and offers.", tag: "BLOOD STRIKE" },
-  { number: "06", title: "Gaming Gift Cards", description: "Browse available gaming vouchers, including Steam, Xbox, and other gift cards.", tag: "GIFT CARDS" },
+  { number: "01", title: "Call of Duty: Mobile", description: "COD Points and Battle Pass offers listed on Carry1st.", tag: "CODM TOP-UP", type: "Top-ups", symbol: "⌁", accent: "lime" },
+  { number: "02", title: "Free Fire Diamonds", description: "Browse available Free Fire diamond top-ups and offers.", tag: "FREE FIRE", type: "Top-ups", symbol: "◇", accent: "orange" },
+  { number: "03", title: "PUBG Mobile UC", description: "Find PUBG Mobile UC top-ups and related offers.", tag: "PUBG MOBILE", type: "Top-ups", symbol: "◎", accent: "gold" },
+  { number: "04", title: "Mobile Legends Diamonds", description: "Explore Mobile Legends diamond top-ups on the partner shop.", tag: "MOBILE LEGENDS", type: "Top-ups", symbol: "✳", accent: "blue" },
+  { number: "05", title: "Blood Strike Golds", description: "Check available Blood Strike Gold top-ups and offers.", tag: "BLOOD STRIKE", type: "Top-ups", symbol: "↗", accent: "red" },
+  { number: "06", title: "Gaming Gift Cards", description: "Browse available gaming vouchers, including Steam, Xbox, and other gift cards.", tag: "GIFT CARDS", type: "Gift cards", symbol: "▣", accent: "purple" },
 ];
+
+const filters = ["All", "Top-ups", "Gift cards"];
+
 export default function Home() {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const visibleCategories = useMemo(() => categories.filter((category) => {
+    const matchesFilter = activeFilter === "All" || category.type === activeFilter;
+    const query = search.trim().toLowerCase();
+    const matchesSearch = !query || `${category.title} ${category.description} ${category.tag}`.toLowerCase().includes(query);
+    return matchesFilter && matchesSearch;
+  }), [activeFilter, search]);
+
   return <main>
     <div className="announcement"><span className="status-dot" /> GAMERS WORLD PRESENTS <strong>SENTINEL</strong><span className="announcement-note">Built for the community.</span></div>
     <header className="site-header">
@@ -28,11 +45,20 @@ export default function Home() {
     </section>
     <section className="ticker" aria-label="Sentinel principles"><span>COMMUNITY</span><b>✳</b><span>STRATEGY</span><b>✳</b><span>DISCOVERY</span><b>✳</b><span>PLAY TOGETHER</span><b>✳</b><span>COMMUNITY</span></section>
     <section className="section explore-section" id="explore">
-      <div className="section-heading"><div><p className="eyebrow">THE SENTINEL NETWORK / 01</p><h2>Find your next move.</h2></div><p className="section-intro">Browse real product categories available on Carry1st, then continue to the partner shop to check current options and complete your purchase.</p></div>
-      <div className="category-grid">{categories.map((category) => <article className="category-card" key={category.number}>
-        <div className="card-top"><span>{category.tag}</span><span>{category.number}</span></div><div className="card-symbol">{category.number === "01" ? "⌁" : category.number === "02" ? "◇" : category.number === "03" ? "◎" : category.number === "04" ? "✳" : category.number === "05" ? "↗" : "▣"}</div><h3>{category.title}</h3><p>{category.description}</p>
-        <a href={affiliateUrl} target="_blank" rel="noreferrer">{"Browse on Carry1st"} <span>↗</span></a>
+      <div className="section-heading"><div><p className="eyebrow">THE SENTINEL NETWORK / 01</p><h2>Find your next move.</h2></div><p className="section-intro">Browse product categories listed on Carry1st, then continue to the partner shop to check current options and complete your purchase.</p></div>
+      <div className="catalogue-tools">
+        <label className="search-box"><span aria-hidden="true">⌕</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search games or gift cards..." aria-label="Search product categories" /></label>
+        <div className="filter-list" aria-label="Filter categories">{filters.map((filter) => <button key={filter} type="button" className={activeFilter === filter ? "filter-button active" : "filter-button"} onClick={() => setActiveFilter(filter)} aria-pressed={activeFilter === filter}>{filter}</button>)}</div>
+      </div>
+      <p className="catalogue-count">{visibleCategories.length} CATEGORIES <span>·</span> CHECK LIVE PRICES AND STOCK ON CARRY1ST</p>
+      <div className="category-grid">{visibleCategories.map((category) => <article className="category-card" key={category.number}>
+        <div className="card-top"><span>{category.tag}</span><span>{category.number}</span></div>
+        <div className={`card-art card-art-${category.accent}`} aria-hidden="true"><span>{category.symbol}</span><i>{category.number}</i></div>
+        <h3>{category.title}</h3><p>{category.description}</p>
+        <a href={affiliateUrl} target="_blank" rel="noreferrer">Browse on Carry1st <span>↗</span></a>
       </article>)}</div>
+      {visibleCategories.length === 0 && <div className="empty-results"><strong>No matching categories</strong><p>Try another game name or switch the category filter.</p><button type="button" className="filter-button active" onClick={() => { setSearch(""); setActiveFilter("All"); }}>Clear filters</button></div>}
+      <p className="catalogue-note">Sentinel is an affiliate discovery page, not the seller. Prices, package options, stock and checkout are provided by Carry1st and may change.</p>
     </section>
     <section className="partner-banner"><div><p className="eyebrow">OFFICIAL PARTNER DESTINATION</p><h2>Ready to gear up?</h2><p>Explore products and offers on Carry1st. Purchases are completed on the partner&apos;s website.</p></div><a className="button button-light" href={affiliateUrl} target="_blank" rel="noreferrer">Shop Carry1st ↗</a></section>
     <section className="section community-section" id="community"><div className="community-mark">S<span>+</span></div><div className="community-copy">
