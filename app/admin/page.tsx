@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const PARTNER_URL = "https://carry1st.sng.link/Dz248/s3c7?paffid=2824295&_smtype=3";
@@ -113,7 +114,7 @@ export default function AdminPage() {
 
   return <main className="admin-shell">
     <aside className="admin-sidebar">
-      <a className="brand" href="/"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMERS WORLD</span></span></a>
+      <Link className="brand" href="/"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMERS WORLD</span></span></Link>
       <p className="admin-side-label">WORKSPACE</p>
       <a className="admin-nav active" href="#overview">▦ &nbsp; Overview</a>
       <a className="admin-nav" href="#products">▤ &nbsp; Products</a>
@@ -121,7 +122,7 @@ export default function AdminPage() {
       <div className="admin-side-bottom"><span className="admin-online-dot" /> Admin workspace<br /><small>Session-protected</small></div>
     </aside>
     <section className="admin-main">
-      <header className="admin-topbar"><div><p className="eyebrow">GAMERS WORLD / CONTROL ROOM</p><h1>Admin dashboard</h1></div><div className="admin-top-actions"><a className="button button-small" href="/">View storefront ↗</a><form action="/api/admin/logout" method="post"><button className="button button-small button-ghost" type="submit">Sign out</button></form></div></header>
+      <header className="admin-topbar"><div><p className="eyebrow">GAMERS WORLD / CONTROL ROOM</p><h1>Admin dashboard</h1></div><div className="admin-top-actions"><Link className="button button-small" href="/">View storefront ↗</Link><form action="/api/admin/logout" method="post"><button className="button button-small button-ghost" type="submit">Sign out</button></form></div></header>
       <div className="admin-warning"><strong>Database-backed catalogue</strong><span>Product edits are saved to the configured database. Affiliate commissions remain blank until verified partner reporting is available.</span></div>
       <section id="overview" className="admin-stats">
         <article><span>CATALOGUE ENTRIES</span><strong>{products.length}</strong><small>Saved products</small></article>
