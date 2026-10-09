@@ -29,7 +29,7 @@ export default function Home() {
         if (!response.ok) throw new Error("Catalogue API unavailable");
         const data = await response.json();
         if (!Array.isArray(data.products) || data.products.length === 0) return;
-        const fallbackBySlug = new Map(starterCategories.map(item => [item.slug, item]));
+        const fallbackBySlug = new Map(starterCategories.map(item => [item.slug, item] as const));
         const items: CatalogueItem[] = data.products.map((product: { slug: string; name: string; category: string; description: string }, index: number) => {
           const fallback = fallbackBySlug.get(product.slug);
           return {
