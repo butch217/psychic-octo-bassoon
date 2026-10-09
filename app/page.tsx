@@ -2,9 +2,12 @@ const affiliateUrl = "https://carry1st.sng.link/Dz248/s3c7?paffid=2824295&_smtyp
 const discordUrl = "https://discord.gg/QUeHC9eN";
 const whatsappUrl = "https://wa.me/2349063389697";
 const categories = [
-  { number: "01", title: "COD Mobile", description: "Guides, loadout discussions, and official-store offers.", tag: "MOBILE FPS" },
-  { number: "02", title: "Gaming offers", description: "Browse eligible digital gaming products through our partner shop.", tag: "AFFILIATE PICKS" },
-  { number: "03", title: "Community events", description: "Meet other players, share tips, and follow community announcements.", tag: "PLAY TOGETHER" },
+  { number: "01", title: "Call of Duty: Mobile", description: "COD Points and Battle Pass offers listed on Carry1st.", tag: "CODM TOP-UP" },
+  { number: "02", title: "Free Fire Diamonds", description: "Browse available Free Fire diamond top-ups and offers.", tag: "FREE FIRE" },
+  { number: "03", title: "PUBG Mobile UC", description: "Find PUBG Mobile UC top-ups and related offers.", tag: "PUBG MOBILE" },
+  { number: "04", title: "Mobile Legends Diamonds", description: "Explore Mobile Legends diamond top-ups on the partner shop.", tag: "MOBILE LEGENDS" },
+  { number: "05", title: "Blood Strike Golds", description: "Check available Blood Strike Gold top-ups and offers.", tag: "BLOOD STRIKE" },
+  { number: "06", title: "Gaming Gift Cards", description: "Browse available gaming vouchers, including Steam, Xbox, and other gift cards.", tag: "GIFT CARDS" },
 ];
 export default function Home() {
   return <main>
@@ -25,10 +28,10 @@ export default function Home() {
     </section>
     <section className="ticker" aria-label="Sentinel principles"><span>COMMUNITY</span><b>✳</b><span>STRATEGY</span><b>✳</b><span>DISCOVERY</span><b>✳</b><span>PLAY TOGETHER</span><b>✳</b><span>COMMUNITY</span></section>
     <section className="section explore-section" id="explore">
-      <div className="section-heading"><div><p className="eyebrow">THE SENTINEL NETWORK / 01</p><h2>Find your next move.</h2></div><p className="section-intro">A growing hub for players who want better information, good company, and easy access to relevant offers.</p></div>
+      <div className="section-heading"><div><p className="eyebrow">THE SENTINEL NETWORK / 01</p><h2>Find your next move.</h2></div><p className="section-intro">Browse real product categories available on Carry1st, then continue to the partner shop to check current options and complete your purchase.</p></div>
       <div className="category-grid">{categories.map((category) => <article className="category-card" key={category.number}>
-        <div className="card-top"><span>{category.tag}</span><span>{category.number}</span></div><div className="card-symbol">{category.number === "01" ? "⌁" : category.number === "02" ? "↗" : "◎"}</div><h3>{category.title}</h3><p>{category.description}</p>
-        <a href={category.number === "03" ? discordUrl : affiliateUrl} target="_blank" rel="noreferrer">{category.number === "03" ? "Enter community" : "Explore with Carry1st"} <span>↗</span></a>
+        <div className="card-top"><span>{category.tag}</span><span>{category.number}</span></div><div className="card-symbol">{category.number === "01" ? "⌁" : category.number === "02" ? "◇" : category.number === "03" ? "◎" : category.number === "04" ? "✳" : category.number === "05" ? "↗" : "▣"}</div><h3>{category.title}</h3><p>{category.description}</p>
+        <a href={affiliateUrl} target="_blank" rel="noreferrer">{"Browse on Carry1st"} <span>↗</span></a>
       </article>)}</div>
     </section>
     <section className="partner-banner"><div><p className="eyebrow">OFFICIAL PARTNER DESTINATION</p><h2>Ready to gear up?</h2><p>Explore products and offers on Carry1st. Purchases are completed on the partner&apos;s website.</p></div><a className="button button-light" href={affiliateUrl} target="_blank" rel="noreferrer">Shop Carry1st ↗</a></section>
