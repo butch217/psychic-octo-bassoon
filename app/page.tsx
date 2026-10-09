@@ -20,7 +20,8 @@ type CatalogueItem = { slug: string; title: string; description: string; tag: st
 const filters = ["All", "Top-ups", "Gift cards"];
 
 export default function Home() {
-  const [categories, setCategories] = useState<CatalogueItem[]>(starterCategories);\n  const [activeFilter, setActiveFilter] = useState("All");
+  const [categories, setCategories] = useState<CatalogueItem[]>(starterCategories);
+  const [activeFilter, setActiveFilter] = useState("All");
   const [search, setSearch] = useState("");
   useEffect(() => {
     let cancelled = false;
