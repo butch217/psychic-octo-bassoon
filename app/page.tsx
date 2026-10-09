@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const affiliateUrl = "https://carry1st.sng.link/Dz248/s3c7?paffid=2824295&_smtype=3";
 const discordUrl = "https://discord.gg/QUeHC9eN";
 const whatsappUrl = "https://wa.me/2349063389697";
 
-const categories = [
+const starterCategories = [
   { number: "01", title: "Call of Duty: Mobile", slug: "call-of-duty-mobile", description: "COD Points and Battle Pass offers listed on Carry1st.", tag: "CODM TOP-UP", type: "Top-ups", symbol: "⌁", accent: "lime" },
   { number: "02", title: "Free Fire Diamonds", slug: "free-fire-diamonds", description: "Browse available Free Fire diamond top-ups and offers.", tag: "FREE FIRE", type: "Top-ups", symbol: "◇", accent: "orange" },
   { number: "03", title: "PUBG Mobile UC", slug: "pubg-mobile-uc", description: "Find PUBG Mobile UC top-ups and related offers.", tag: "PUBG MOBILE", type: "Top-ups", symbol: "◎", accent: "gold" },
@@ -15,11 +15,40 @@ const categories = [
   { number: "06", title: "Gaming Gift Cards", slug: "gaming-gift-cards", description: "Browse available gaming vouchers, including Steam, Xbox, and other gift cards.", tag: "GIFT CARDS", type: "Gift cards", symbol: "▣", accent: "purple" },
 ];
 
+type CatalogueItem = { slug: string; title: string; description: string; tag: string; type: string; symbol: string; accent: string; number: string };
+
 const filters = ["All", "Top-ups", "Gift cards"];
 
 export default function Home() {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [categories, setCategories] = useState<CatalogueItem[]>(starterCategories);\n  const [activeFilter, setActiveFilter] = useState("All");
   const [search, setSearch] = useState("");
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/products", { cache: "no-store" })
+      .then(async response => {
+        if (!response.ok) throw new Error("Catalogue API unavailable");
+        const data = await response.json();
+        if (!Array.isArray(data.products) || data.products.length === 0) return;
+        const fallbackBySlug = new Map(starterCategories.map(item => [item.slug, item]));
+        const items: CatalogueItem[] = data.products.map((product: { slug: string; name: string; category: string; description: string }, index: number) => {
+          const fallback = fallbackBySlug.get(product.slug);
+          return {
+            slug: product.slug,
+            title: product.name,
+            description: product.description,
+            tag: fallback?.tag ?? product.category.toUpperCase(),
+            type: product.category,
+            symbol: fallback?.symbol ?? "✳",
+            accent: fallback?.accent ?? "lime",
+            number: String(index + 1).padStart(2, "0"),
+          };
+        });
+        if (!cancelled) setCategories(items);
+      })
+      .catch(() => { /* Keep the static starter catalogue available if the database is not configured. */ });
+    return () => { cancelled = true; };
+  }, []);
+
   const visibleCategories = useMemo(() => categories.filter((category) => {
     const matchesFilter = activeFilter === "All" || category.type === activeFilter;
     const query = search.trim().toLowerCase();
