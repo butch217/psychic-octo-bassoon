@@ -1,0 +1,25 @@
+name: Validate Sentinel
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+    branches: [main]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm install
+      - run: npx prisma generate
+        env:
+          DATABASE_URL: mysql://sentinel:sentinel@127.0.0.1:3306/sentinel
+      - run: npm run lint
+      - run: npm run build
+        env:
+          DATABASE_URL: mysql://sentinel:sentinel@127.0.0.1:3306/sentinel
+          ADMIN_SESSION_SECRET: ci-only-secret-value-longer-than-32-characters
+          ADMIN_PASSWORD_HASH: ci-salt:00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
