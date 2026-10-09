@@ -20,6 +20,12 @@ function httpsUrl(value: unknown) {
   try { return new URL(value).protocol === "https:"; } catch { return false; }
 }
 
+function isCarry1stPartnerUrl(value: unknown) {
+  if (!httpsUrl(value)) return false;
+  const host = new URL(value as string).hostname.toLowerCase();
+  return host === "carry1st.sng.link" || host === "carry1st.com" || host.endsWith(".carry1st.com");
+}
+
 export async function PATCH(request: NextRequest, context: Context) {
   if (!authorized(request)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id } = await context.params;
