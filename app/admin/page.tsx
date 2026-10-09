@@ -42,7 +42,7 @@ export default function AdminPage() {
       <div className="admin-side-bottom"><span className="admin-online-dot" /> Admin UI preview<br /><small>Authentication not enabled</small></div>
     </aside>
     <section className="admin-main">
-      <header className="admin-topbar"><div><p className="eyebrow">GAMERS WORLD / CONTROL ROOM</p><h1>Admin dashboard</h1></div><a className="button button-small" href="/">View storefront ↗</a></header>
+      <header className="admin-topbar"><div><p className="eyebrow">GAMERS WORLD / CONTROL ROOM</p><h1>Admin dashboard</h1></div><div className="admin-top-actions"><a className="button button-small" href="/">View storefront ↗</a><form action="/api/admin/logout" method="post"><button className="button button-small button-ghost" type="submit">Sign out</button></form></div></header>
       <div className="admin-warning"><strong>Preview only</strong><span>This dashboard is not secured or database-connected yet. Do not enter passwords, customer data, or confidential information.</span></div>
       <section id="overview" className="admin-stats">
         <article><span>CATALOGUE ENTRIES</span><strong>{products.length}</strong><small>Local preview items</small></article>
