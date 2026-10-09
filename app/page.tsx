@@ -56,7 +56,7 @@ export default function Home() {
     const query = search.trim().toLowerCase();
     const matchesSearch = !query || `${category.title} ${category.description} ${category.tag}`.toLowerCase().includes(query);
     return matchesFilter && matchesSearch;
-  }), [activeFilter, search]);
+  }), [activeFilter, categories, search]);
 
   return <main>
     <div className="announcement"><span className="status-dot" /> GAMERS WORLD PRESENTS <strong>SENTINEL</strong><span className="announcement-note">Built for the community.</span></div>
