@@ -13,3 +13,32 @@
 .disclosure{margin:0 7% 35px;padding:22px 25px;border:1px solid var(--line);background:#0e1112}.disclosure strong{font-size:11px;color:var(--lime)}.disclosure p{font-size:11px;line-height:1.8;color:var(--muted);margin:8px 0 0}.footer{border-top:1px solid var(--line);padding:25px 5.5%;display:flex;justify-content:space-between;align-items:center;gap:20px;color:#858d8a;font-size:9px;letter-spacing:.12em}.footer-brand{color:var(--text);font-size:14px}.footer-brand .brand-mark{width:30px;height:30px;font-size:22px}
 @media(max-width:800px){.site-header{height:74px;padding:0 5%;gap:10px}.site-header nav{display:none}.brand{font-size:16px}.button-small{padding:10px;font-size:10px}.hero{grid-template-columns:1fr;padding:58px 7% 30px;gap:10px}.hero-art{height:250px}.shield{transform:scale(.8)}.orbit-one{width:260px;height:195px}.orbit-two{height:260px;width:200px}.section{padding:60px 6%}.section-heading{display:block}.section-intro{margin-top:18px}.category-grid{grid-template-columns:1fr}.category-card{min-height:240px}.partner-banner{margin:0 6%;padding:28px;align-items:flex-start;flex-direction:column}.community-section{grid-template-columns:1fr;gap:35px}.community-mark{width:160px;height:160px;font-size:100px}.disclosure{margin:0 6% 25px}.footer{flex-wrap:wrap}.footer>span:nth-child(2){display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* Searchable Sentinel catalogue */
+.catalogue-tools{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:30px 0 14px}
+.search-box{display:flex;align-items:center;gap:10px;flex:1;max-width:430px;padding:0 15px;min-height:46px;border:1px solid var(--line);background:#101315;color:var(--lime)}
+.search-box>span{font-size:24px;line-height:1}
+.search-box input{width:100%;background:transparent;border:0;outline:0;color:var(--text);font:inherit;font-size:12px;min-width:0}
+.search-box input::placeholder{color:#7e8783}
+.filter-list{display:flex;gap:7px;flex-wrap:wrap}
+.filter-button{border:1px solid var(--line);background:#111416;color:#b6bfba;padding:12px 16px;font:600 11px 'DM Sans',Arial,sans-serif;cursor:pointer}
+.filter-button:hover,.filter-button.active{background:var(--lime);border-color:var(--lime);color:#11150b}
+.catalogue-count{font-size:9px;letter-spacing:.13em;color:#9da4a5;margin:16px 0 20px}
+.catalogue-count span{color:var(--lime);padding:0 6px}
+.card-art{height:110px;margin:22px 0 19px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid #303b34;background:radial-gradient(ellipse at center,#283729 0%,#111614 70%)}
+.card-art:before,.card-art:after{content:'';position:absolute;width:130px;height:130px;border:1px solid #9bb54c44;transform:rotate(45deg)}
+.card-art:after{width:82px;height:82px;border-color:#d7ff4377}
+.card-art>span{position:relative;z-index:1;font-family:'Barlow Condensed',sans-serif;font-size:63px;font-weight:800;color:var(--lime);text-shadow:0 0 25px #d7ff4360}
+.card-art>i{position:absolute;right:12px;bottom:9px;font-size:9px;font-style:normal;letter-spacing:.15em;color:#b7c5a0}
+.card-art-orange{background:radial-gradient(ellipse at center,#3c281b,#111312 72%)}.card-art-orange>span{color:#ffad5c;text-shadow:0 0 25px #ffad5c50}
+.card-art-gold{background:radial-gradient(ellipse at center,#3b3319,#111312 72%)}.card-art-gold>span{color:#e6c765;text-shadow:0 0 25px #e6c76550}
+.card-art-blue{background:radial-gradient(ellipse at center,#1c2d43,#111312 72%)}.card-art-blue>span{color:#80b9ff;text-shadow:0 0 25px #80b9ff50}
+.card-art-red{background:radial-gradient(ellipse at center,#3d2020,#111312 72%)}.card-art-red>span{color:#ff746c;text-shadow:0 0 25px #ff746c50}
+.card-art-purple{background:radial-gradient(ellipse at center,#30213f,#111312 72%)}.card-art-purple>span{color:#d2a0ff;text-shadow:0 0 25px #d2a0ff50}
+.category-card{min-height:0}
+.category-card p{min-height:42px}
+.catalogue-note{font-size:10px;line-height:1.7;color:#818986;margin:22px 0 0}
+.empty-results{padding:35px;border:1px solid var(--line);background:var(--panel);text-align:center}
+.empty-results strong{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:24px}
+.empty-results p{color:var(--muted);font-size:12px}
+@media(max-width:800px){.catalogue-tools{align-items:stretch;flex-direction:column}.search-box{max-width:none}.filter-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.filter-button{padding:12px 8px}.card-art{height:100px}}
