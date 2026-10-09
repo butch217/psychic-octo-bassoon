@@ -7,12 +7,12 @@ const discordUrl = "https://discord.gg/QUeHC9eN";
 const whatsappUrl = "https://wa.me/2349063389697";
 
 const categories = [
-  { number: "01", title: "Call of Duty: Mobile", description: "COD Points and Battle Pass offers listed on Carry1st.", tag: "CODM TOP-UP", type: "Top-ups", symbol: "⌁", accent: "lime" },
-  { number: "02", title: "Free Fire Diamonds", description: "Browse available Free Fire diamond top-ups and offers.", tag: "FREE FIRE", type: "Top-ups", symbol: "◇", accent: "orange" },
-  { number: "03", title: "PUBG Mobile UC", description: "Find PUBG Mobile UC top-ups and related offers.", tag: "PUBG MOBILE", type: "Top-ups", symbol: "◎", accent: "gold" },
-  { number: "04", title: "Mobile Legends Diamonds", description: "Explore Mobile Legends diamond top-ups on the partner shop.", tag: "MOBILE LEGENDS", type: "Top-ups", symbol: "✳", accent: "blue" },
-  { number: "05", title: "Blood Strike Golds", description: "Check available Blood Strike Gold top-ups and offers.", tag: "BLOOD STRIKE", type: "Top-ups", symbol: "↗", accent: "red" },
-  { number: "06", title: "Gaming Gift Cards", description: "Browse available gaming vouchers, including Steam, Xbox, and other gift cards.", tag: "GIFT CARDS", type: "Gift cards", symbol: "▣", accent: "purple" },
+  { number: "01", title: "Call of Duty: Mobile", slug: "call-of-duty-mobile", description: "COD Points and Battle Pass offers listed on Carry1st.", tag: "CODM TOP-UP", type: "Top-ups", symbol: "⌁", accent: "lime" },
+  { number: "02", title: "Free Fire Diamonds", slug: "free-fire-diamonds", description: "Browse available Free Fire diamond top-ups and offers.", tag: "FREE FIRE", type: "Top-ups", symbol: "◇", accent: "orange" },
+  { number: "03", title: "PUBG Mobile UC", slug: "pubg-mobile-uc", description: "Find PUBG Mobile UC top-ups and related offers.", tag: "PUBG MOBILE", type: "Top-ups", symbol: "◎", accent: "gold" },
+  { number: "04", title: "Mobile Legends Diamonds", slug: "mobile-legends-diamonds", description: "Explore Mobile Legends diamond top-ups on the partner shop.", tag: "MOBILE LEGENDS", type: "Top-ups", symbol: "✳", accent: "blue" },
+  { number: "05", title: "Blood Strike Golds", slug: "blood-strike-golds", description: "Check available Blood Strike Gold top-ups and offers.", tag: "BLOOD STRIKE", type: "Top-ups", symbol: "↗", accent: "red" },
+  { number: "06", title: "Gaming Gift Cards", slug: "gaming-gift-cards", description: "Browse available gaming vouchers, including Steam, Xbox, and other gift cards.", tag: "GIFT CARDS", type: "Gift cards", symbol: "▣", accent: "purple" },
 ];
 
 const filters = ["All", "Top-ups", "Gift cards"];
@@ -55,7 +55,7 @@ export default function Home() {
         <div className="card-top"><span>{category.tag}</span><span>{category.number}</span></div>
         <div className={`card-art card-art-${category.accent}`} aria-hidden="true"><span>{category.symbol}</span><i>{category.number}</i></div>
         <h3>{category.title}</h3><p>{category.description}</p>
-        <a href={affiliateUrl} target="_blank" rel="noreferrer">Browse on Carry1st <span>↗</span></a>
+        <a href={`/api/outbound/${category.slug}`} target="_blank" rel="noreferrer">Browse on Carry1st <span>↗</span></a>
       </article>)}</div>
       {visibleCategories.length === 0 && <div className="empty-results"><strong>No matching categories</strong><p>Try another game name or switch the category filter.</p><button type="button" className="filter-button active" onClick={() => { setSearch(""); setActiveFilter("All"); }}>Clear filters</button></div>}
       <p className="catalogue-note">Sentinel is an affiliate discovery page, not the seller. Prices, package options, stock and checkout are provided by Carry1st and may change.</p>
