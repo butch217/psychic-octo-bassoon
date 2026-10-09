@@ -4,11 +4,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const PARTNER_URL = "https://carry1st.sng.link/Dz248/s3c7?paffid=2824295&_smtype=3";
 type Product = { id: string; name: string; slug: string; category: string; description: string; partnerUrl: string; status: "DRAFT" | "ACTIVE" | "ARCHIVED"; sortOrder: number };
-type Draft = { name: string; category: string; description: string };
+type Draft = { name: string; category: string; description: string };\ntype AffiliateReport = { outboundClicks: number; verifiedOrders: number; commissions: { currency: string; amountMinor: number }[] };
 const emptyDraft: Draft = { name: "", category: "Top-ups", description: "" };
 
 export default function AdminPage() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);\n  const [report, setReport] = useState<AffiliateReport | null>(null);
   const [query, setQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ export default function AdminPage() {
     } finally { setLoading(false); }
   }, []);
 
-  useEffect(() => { void loadProducts(); }, [loadProducts]);
+  useEffect(() => {\n    void loadProducts();\n    fetch("/api/admin/affiliate-report", { cache: "no-store" }).then(async response => { if (!response.ok) throw new Error("Reporting unavailable"); return response.json(); }).then(setReport).catch(() => setReport(null));\n  }, [loadProducts]);
 
   const filtered = useMemo(() => products.filter(p =>
     `${p.name} ${p.category} ${p.description}`.toLowerCase().includes(query.toLowerCase())
@@ -96,7 +96,7 @@ export default function AdminPage() {
       <section id="overview" className="admin-stats">
         <article><span>CATALOGUE ENTRIES</span><strong>{products.length}</strong><small>Saved products</small></article>
         <article><span>ACTIVE CATEGORIES</span><strong>{activeCategories}</strong><small>Categories with published items</small></article>
-        <article><span>VERIFIED COMMISSION</span><strong>—</strong><small>Awaiting verified partner data</small></article>
+        <article><span>VERIFIED COMMISSION</span><strong>{report?.commissions.length ? report.commissions.map(item => `${(item.amountMinor / 100).toFixed(2)} ${item.currency}`).join(" · ") : "—"}</strong><small>Verified partner records only</small></article>
       </section>
       <section className="admin-panel" id="products">
         <div className="admin-panel-heading"><div><p className="eyebrow">CATALOGUE MANAGEMENT / 01</p><h2>Products</h2></div><button className="button" onClick={() => setShowForm(v => !v)}>{showForm ? "Cancel" : "+ Add product"}</button></div>
@@ -111,7 +111,7 @@ export default function AdminPage() {
         {!loading && filtered.length === 0 && <p className="admin-empty">No saved products match this search.</p>}
         <p className="admin-notice" role="status">{loading ? "Loading…" : notice}</p>
       </section>
-      <section className="admin-panel" id="affiliate"><div className="admin-panel-heading"><div><p className="eyebrow">PERFORMANCE / 02</p><h2>Affiliate reporting</h2></div></div><div className="admin-report-note"><strong>Verified reporting is not connected yet.</strong><p>Outbound clicks are not confirmed sales. Import official partner reports before recording verified orders or commission amounts. No commission is estimated or invented.</p></div></section>
+      <section className="admin-panel" id="affiliate"><div className="admin-panel-heading"><div><p className="eyebrow">PERFORMANCE / 02</p><h2>Affiliate reporting</h2></div></div><div className="admin-report-note"><strong>Partner conversion imports are not connected yet.</strong><p>Tracked outbound clicks: {report?.outboundClicks ?? "—"} · Verified orders recorded: {report?.verifiedOrders ?? "—"}. A click is not a sale. Commission totals include only events explicitly marked verified in the database; do not manually estimate or invent earnings.</p></div></section>
     </section>
   </main>;
 }
