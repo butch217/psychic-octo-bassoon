@@ -87,7 +87,7 @@ See `.env.example`. Real values belong only in a local ignored environment file 
 - `PATCH /api/admin/products/:id` — update product (admin session required).
 - `DELETE /api/admin/products/:id` — delete product (admin session required).
 - `GET /api/outbound/:slug` — record an outbound click when possible, then redirect to the configured partner destination.
-- `POST /api/admin/login` and `POST /api/admin/logout` — admin session lifecycle.
+- `GET /api/admin/affiliate-report` — verified event totals and commission aggregates (admin session required).\n- `POST /api/admin/affiliate-report/import` — import normalized rows from an official partner report; duplicate partner references are skipped (admin session required).\n- `POST /api/admin/login` and `POST /api/admin/logout` — admin session lifecycle.
 
 ## Deployment checklist
 
@@ -106,7 +106,7 @@ Before public launch:
 
 - This branch has not been run through a real dependency install, lint, or production build in this workspace; CI results must be checked after GitHub Actions runs.
 - No production database or hosting environment has been provisioned from this repository.
-- Affiliate click records are not confirmed purchases; verified commission import/reconciliation is not implemented.
+- Affiliate click records are not confirmed purchases. A manual JSON import for normalized official partner-report rows exists, but there is no direct Carry1st API integration or automatic reconciliation.
 - Login rate limiting and production operational controls still need deployment configuration.
 - Product artwork currently uses CSS illustrations; replace with licensed/official assets only when available and permitted.
 
