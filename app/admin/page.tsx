@@ -4,11 +4,13 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 const PARTNER_URL = "https://carry1st.sng.link/Dz248/s3c7?paffid=2824295&_smtype=3";
 type Product = { id: string; name: string; slug: string; category: string; description: string; partnerUrl: string; status: "DRAFT" | "ACTIVE" | "ARCHIVED"; sortOrder: number };
-type Draft = { name: string; category: string; description: string };\ntype AffiliateReport = { outboundClicks: number; verifiedOrders: number; commissions: { currency: string; amountMinor: number }[] };
+type Draft = { name: string; category: string; description: string };
+type AffiliateReport = { outboundClicks: number; verifiedOrders: number; commissions: { currency: string; amountMinor: number }[] };
 const emptyDraft: Draft = { name: "", category: "Top-ups", description: "" };
 
 export default function AdminPage() {
-  const [products, setProducts] = useState<Product[]>([]);\n  const [report, setReport] = useState<AffiliateReport | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [report, setReport] = useState<AffiliateReport | null>(null);
   const [query, setQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -29,7 +31,10 @@ export default function AdminPage() {
     } finally { setLoading(false); }
   }, []);
 
-  useEffect(() => {\n    void loadProducts();\n    fetch("/api/admin/affiliate-report", { cache: "no-store" }).then(async response => { if (!response.ok) throw new Error("Reporting unavailable"); return response.json(); }).then(setReport).catch(() => setReport(null));\n  }, [loadProducts]);
+  useEffect(() => {
+    void loadProducts();
+    fetch("/api/admin/affiliate-report", { cache: "no-store" }).then(async response => { if (!response.ok) throw new Error("Reporting unavailable"); return response.json(); }).then(setReport).catch(() => setReport(null));
+  }, [loadProducts]);
 
   const filtered = useMemo(() => products.filter(p =>
     `${p.name} ${p.category} ${p.description}`.toLowerCase().includes(query.toLowerCase())
