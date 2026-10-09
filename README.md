@@ -87,7 +87,9 @@ See `.env.example`. Real values belong only in a local ignored environment file 
 - `PATCH /api/admin/products/:id` — update product (admin session required).
 - `DELETE /api/admin/products/:id` — delete product (admin session required).
 - `GET /api/outbound/:slug` — record an outbound click when possible, then redirect to the configured partner destination.
-- `GET /api/admin/affiliate-report` — verified event totals and commission aggregates (admin session required).\n- `POST /api/admin/affiliate-report/import` — import normalized rows from an official partner report; duplicate partner references are skipped (admin session required).\n- `POST /api/admin/login` and `POST /api/admin/logout` — admin session lifecycle.
+- `GET /api/admin/affiliate-report` — verified event totals and commission aggregates (admin session required).
+- `POST /api/admin/affiliate-report/import` — import normalized rows from an official partner report; duplicate partner references are skipped (admin session required).
+- `POST /api/admin/login` and `POST /api/admin/logout` — admin session lifecycle.
 
 ## Deployment checklist
 
