@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   const rows = body.events as ImportRow[];
   for (const row of rows) {
     if (!row || typeof row.partnerReference !== "string" || row.partnerReference.trim().length < 1 || row.partnerReference.length > 191 ||
-      !Number.isSafeInteger(row.commissionMinor) || Math.abs(row.commissionMinor) > 2_000_000_000 ||
+      !Number.isSafeInteger(row.commissionMinor) || row.commissionMinor < 0 || row.commissionMinor > 2_000_000_000 ||
       typeof row.currency !== "string" || !/^[A-Z]{3}$/.test(row.currency) ||
       (row.occurredAt !== undefined && (!Number.isFinite(Date.parse(row.occurredAt))))) {
       return NextResponse.json({ error: "Each row needs a partner reference, integer minor-unit commission, ISO currency code, and optional valid timestamp." }, { status: 400 });
