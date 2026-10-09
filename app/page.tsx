@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 const affiliateUrl = "https://carry1st.sng.link/Dz248/s3c7?paffid=2824295&_smtype=3";
@@ -60,7 +61,7 @@ export default function Home() {
   return <main>
     <div className="announcement"><span className="status-dot" /> GAMERS WORLD PRESENTS <strong>SENTINEL</strong><span className="announcement-note">Built for the community.</span></div>
     <header className="site-header">
-      <a className="brand" href="/" aria-label="Sentinel Gaming home"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMING / GAMERS WORLD</span></span></a>
+      <Link className="brand" href="/" aria-label="Sentinel Gaming home"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMING / GAMERS WORLD</span></span></Link>
       <nav aria-label="Main navigation"><a href="#explore">Explore</a><a href="#community">Community</a><a href="#about">About</a></nav>
       <a className="button button-small" href={affiliateUrl} target="_blank" rel="noreferrer">Visit Carry1st ↗</a>
     </header>
@@ -96,6 +97,6 @@ export default function Home() {
       <div className="hero-actions"><a className="button" href={discordUrl} target="_blank" rel="noreferrer">Join Discord ↗</a><a className="text-link" href={whatsappUrl} target="_blank" rel="noreferrer">Contact on WhatsApp ↗</a></div>
     </div></section>
     <section className="disclosure" id="about"><strong>Affiliate transparency</strong><p>Some links on Sentinel may be affiliate links. If you make an eligible purchase through them, Sentinel may earn a commission at no additional cost to you. Product availability, prices, fulfilment, and purchase terms are controlled by Carry1st. Sentinel does not process payments for these partner purchases.</p></section>
-    <footer className="footer"><a className="brand footer-brand" href="/"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMERS WORLD</span></span></a><span>COMMUNITY FIRST. ALWAYS.</span><span>© {new Date().getFullYear()} Gamers World</span></footer>
+    <footer className="footer"><Link className="brand footer-brand" href="/"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMERS WORLD</span></span></Link><span>COMMUNITY FIRST. ALWAYS.</span><span>© {new Date().getFullYear()} Gamers World</span></footer>
   </main>;
 }
