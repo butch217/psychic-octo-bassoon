@@ -35,7 +35,7 @@ export async function PATCH(request: NextRequest, context: Context) {
   }
   if ("category" in body) { const v = text(body.category, 80); if (!v) return NextResponse.json({ error: "Invalid category" }, { status: 400 }); data.category = v; }
   if ("description" in body) { const v = text(body.description, 3000); if (!v) return NextResponse.json({ error: "Invalid description" }, { status: 400 }); data.description = v; }
-  if ("partnerUrl" in body) { if (!httpsUrl(body.partnerUrl)) return NextResponse.json({ error: "Partner URL must use HTTPS" }, { status: 400 }); data.partnerUrl = body.partnerUrl; }
+  if ("partnerUrl" in body) { if (!partnerUrl(body.partnerUrl)) return NextResponse.json({ error: "Partner URL must be a valid HTTPS Carry1st destination" }, { status: 400 }); data.partnerUrl = body.partnerUrl; }
   if ("imageUrl" in body) {
     if (body.imageUrl !== null && body.imageUrl !== "" && !httpsUrl(body.imageUrl)) return NextResponse.json({ error: "Image URL must use HTTPS" }, { status: 400 });
     data.imageUrl = body.imageUrl === "" ? null : body.imageUrl;
