@@ -10,7 +10,9 @@ const emptyDraft: Draft = { name: "", category: "Top-ups", description: "" };
 
 export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [report, setReport] = useState<AffiliateReport | null>(null);\n  const [importText, setImportText] = useState("");\n  const [importing, setImporting] = useState(false);
+  const [report, setReport] = useState<AffiliateReport | null>(null);
+  const [importText, setImportText] = useState("");
+  const [importing, setImporting] = useState(false);
   const [query, setQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -106,7 +108,8 @@ export default function AdminPage() {
     } catch (error) { setNotice(error instanceof Error ? error.message : "Report import failed."); }
     finally { setImporting(false); }
   }
-\n  const activeCategories = new Set(products.filter(p => p.status === "ACTIVE").map(p => p.category)).size;
+
+  const activeCategories = new Set(products.filter(p => p.status === "ACTIVE").map(p => p.category)).size;
 
   return <main className="admin-shell">
     <aside className="admin-sidebar">
