@@ -1,0 +1,56 @@
+// Sentinel catalogue schema for MySQL. Configure DATABASE_URL before running Prisma migrations.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum AffiliateEventType {
+  OUTBOUND_CLICK
+  VERIFIED_ORDER
+  COMMISSION_ADJUSTMENT
+}
+
+model Product {
+  id          String        @id @default(cuid())
+  name        String
+  slug        String        @unique
+  category    String
+  description String        @db.Text
+  imageUrl    String?       @db.VarChar(2048)
+  partnerUrl  String        @db.VarChar(2048)
+  status      ProductStatus @default(DRAFT)
+  sortOrder   Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  events      AffiliateEvent[]
+
+  @@index([status, sortOrder])
+  @@index([category])
+}
+
+model AffiliateEvent {
+  id                String             @id @default(cuid())
+  type              AffiliateEventType
+  productId         String?
+  product           Product?           @relation(fields: [productId], references: [id], onDelete: SetNull)
+  partnerReference  String?            @unique
+  commissionMinor   Int?
+  currency          String?            @db.VarChar(3)
+  verified          Boolean            @default(false)
+  source            String             @default("sentinel")
+  occurredAt        DateTime           @default(now())
+  createdAt         DateTime           @default(now())
+
+  @@index([type, occurredAt])
+  @@index([verified, type])
+}
