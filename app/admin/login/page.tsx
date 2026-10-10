@@ -1,6 +1,8 @@
 import Link from "next/link";
 
-export default function AdminLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+export default async function AdminLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+  const { error } = await searchParams;
+
   return <main className="admin-login-shell">
     <section className="admin-login-card">
       <Link className="brand" href="/"><span className="brand-mark">S</span><span>SENTINEL<span className="brand-sub">GAMERS WORLD</span></span></Link>
@@ -11,7 +13,7 @@ export default function AdminLoginPage({ searchParams }: { searchParams: Promise
         <label>Administrator password<input type="password" name="password" autoComplete="current-password" required minLength={12} /></label>
         <button className="button" type="submit">Sign in securely ↗</button>
       </form>
-      <p className="admin-login-error">{(await searchParams).error ? "Sign-in failed. Check the password or server configuration." : ""}</p>
+      <p className="admin-login-error">{error ? "Sign-in failed. Check the password or server configuration." : ""}</p>
       <p className="admin-login-foot">Never share your admin password. <Link href="/">Return to storefront</Link></p>
     </section>
   </main>;
