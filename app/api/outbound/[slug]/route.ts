@@ -25,7 +25,9 @@ export async function GET(request: NextRequest, context: Context) {
     if (product?.status === "ACTIVE") {
       destination = product.partnerUrl;
       productId = product.id;
-    } else if (product && product.status !== "ACTIVE") {
+    } else if (product) {
+      return NextResponse.redirect(new URL("/", request.url), 303);
+    } else if (!ALLOWED_SLUGS.has(slug)) {
       return NextResponse.redirect(new URL("/", request.url), 303);
     }
   } catch {
