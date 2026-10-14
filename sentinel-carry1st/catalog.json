@@ -1,0 +1,135 @@
+{
+  "brand": "Sentinel Carry1st Gaming",
+  "currency": "NGN",
+  "usdReference": {
+    "ngnPerUsd": 1330,
+    "observedDate": "2026-10-14",
+    "note": "Indicative conversion only; not the partner checkout price."
+  },
+  "affiliateLinks": {
+    "carry1st": "https://shop.carry1st.com/?aff=peter9j",
+    "coins": "https://tolt.link/coins"
+  },
+  "products": [
+    {
+      "id": "codm",
+      "name": "Call of Duty: Mobile COD Points",
+      "destination": "https://shop.carry1st.com/en/NG/product/codm-call-of-duty-mobile-cp-points-top-up-battle-pass/direct-topup?aff=peter9j",
+      "packages": [
+        [
+          "30 COD Points",
+          660
+        ],
+        [
+          "80 COD Points",
+          1650
+        ],
+        [
+          "420 COD Points",
+          8200
+        ],
+        [
+          "880 COD Points",
+          16500
+        ],
+        [
+          "2400 COD Points",
+          41000
+        ],
+        [
+          "5000 COD Points",
+          82500
+        ]
+      ]
+    },
+    {
+      "id": "freefire",
+      "name": "Free Fire Diamonds",
+      "destination": "https://shop.carry1st.com/en/NG/product/free-fire-direct-top-up-diamonds-global-sgm/direct-topup?aff=peter9j",
+      "packages": [
+        [
+          "100 Diamonds",
+          1638
+        ],
+        [
+          "210 Diamonds",
+          3276
+        ],
+        [
+          "530 Diamonds",
+          8190
+        ],
+        [
+          "1080 Diamonds",
+          16380
+        ],
+        [
+          "2200 Diamonds",
+          32760
+        ]
+      ]
+    },
+    {
+      "id": "ml",
+      "name": "Mobile Legends Diamonds",
+      "destination": "https://shop.carry1st.com/en/NG/product/Mobile_Legends_Diamonds/direct-topup?aff=peter9j",
+      "packages": [
+        [
+          "14 Diamonds (13 + 1)",
+          403
+        ],
+        [
+          "42 Diamonds (38 + 4)",
+          1208
+        ],
+        [
+          "55 Diamonds (50 + 5)",
+          1569
+        ],
+        [
+          "70 Diamonds (64 + 6)",
+          1999
+        ],
+        [
+          "86 Diamonds (78 + 8)",
+          1888
+        ],
+        [
+          "140 Diamonds (127 + 13)",
+          3998
+        ]
+      ]
+    },
+    {
+      "id": "pubg",
+      "name": "PUBG Mobile UC",
+      "destination": "https://shop.carry1st.com/en/NG/product/pubg-mobile-uc-top-up-gm/direct-topup?aff=peter9j",
+      "packages": [
+        [
+          "300 + 25 UC",
+          6340.64
+        ],
+        [
+          "600 + 60 UC",
+          12693.24
+        ],
+        [
+          "1500 + 300 UC",
+          31751.04
+        ],
+        [
+          "3000 + 850 UC",
+          63514.04
+        ],
+        [
+          "6000 + 2100 UC",
+          127040.04
+        ],
+        [
+          "12000 + 4200 UC",
+          254092.04
+        ]
+      ]
+    }
+  ]
+}
